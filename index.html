@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wajahat Hussain Sangi— Cloud Native AI Engineer</title>
+<title>Wajahat Hussain Sangi — Cloud Native AI Engineer</title>
 <meta name="description" content="Resume of Wajahat Hussain Sangi, Cloud Native AI Engineer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -283,7 +283,6 @@
 
     html, body {
       width: 210mm;
-      height: 297mm;
       background: #fff;
       padding: 0;
       margin: 0;
@@ -296,13 +295,12 @@
 
     .page {
       width: 210mm;
-      height: 297mm;
       max-width: none;
       margin: 0;
       box-shadow: none;
       border-radius: 0;
       flex-wrap: nowrap;
-      overflow: hidden;
+      transform-origin: top left;
     }
 
     .sidebar {
@@ -316,54 +314,99 @@
     .main { flex: 1 1 auto; }
 
     .banner {
-      padding: 15mm 11mm 10mm;
+      padding: 13mm 11mm 9mm;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
-    .banner h1 { font-size: 2.25rem; }
-    .banner .title { font-size: 1.05rem; margin-top: 7px; }
+    .banner h1 { font-size: 1.95rem; }
+    .banner .title { font-size: 1rem; margin-top: 7px; }
 
-    .content { padding: 11mm 11mm 15mm; }
+    .content { padding: 10mm 11mm 12mm; }
 
-    .photo-circle { width: 135px; height: 135px; }
-    .photo-circle span { font-size: 2.0rem; }
-    .photo-wrap { margin-bottom: 26px; }
+    .photo-circle { width: 125px; height: 125px; }
+    .photo-circle span { font-size: 1.85rem; }
+    .photo-wrap { margin-bottom: 22px; }
 
-    .summary { font-size: 0.85rem; line-height: 1.6; margin-bottom: 26px; }
+    .summary { font-size: 0.82rem; line-height: 1.55; margin-bottom: 22px; }
 
-    .contact-list li { font-size: 0.82rem; margin-bottom: 14px; gap: 10px; }
+    .contact-list li { font-size: 0.8rem; margin-bottom: 12px; gap: 10px; }
     .icon-badge {
-      width: 28px;
-      height: 28px;
-      font-size: 0.77rem;
+      width: 27px;
+      height: 27px;
+      font-size: 0.76rem;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
-    .side-section { margin-top: 26px; }
-    .side-section h3 { font-size: 0.75rem; padding: 8px 14px; margin-bottom: 12px; }
-    .plain-list li { font-size: 0.81rem; margin-bottom: 8px; }
+    .side-section { margin-top: 22px; }
+    .side-section h3 { font-size: 0.74rem; padding: 7px 13px; margin-bottom: 10px; }
+    .plain-list li { font-size: 0.8rem; margin-bottom: 7px; }
 
-    .block { margin-bottom: 26px; }
+    .block { margin-bottom: 20px; }
     .block-title {
-      font-size: 0.96rem;
-      padding: 8px 21px;
-      margin-bottom: 16px;
+      font-size: 0.92rem;
+      padding: 7px 20px;
+      margin-bottom: 14px;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
-    .entry { margin-bottom: 18px; page-break-inside: avoid; break-inside: avoid; }
-    .entry h3 { font-size: 1.04rem; }
-    .entry-sub { font-size: 0.87rem; margin-top: 4px; }
-    .entry-date { font-size: 0.75rem; margin-top: 4px; margin-bottom: 8px; }
-    .entry-desc { font-size: 0.87rem; margin-bottom: 10px; line-height: 1.5; }
+    .entry { margin-bottom: 15px; page-break-inside: avoid; break-inside: avoid; }
+    .entry h3 { font-size: 1rem; }
+    .entry-sub { font-size: 0.85rem; margin-top: 3px; }
+    .entry-date { font-size: 0.73rem; margin-top: 3px; margin-bottom: 7px; }
+    .entry-desc { font-size: 0.85rem; margin-bottom: 8px; line-height: 1.45; }
     .bullets { padding-left: 17px; }
-    .bullets li { font-size: 0.86rem; margin-bottom: 6px; line-height: 1.5; }
+    .bullets li { font-size: 0.84rem; margin-bottom: 5px; line-height: 1.45; }
   }
 </style>
 </head>
 <body>
+
+<script>
+  // Auto-shrink the resume to fit exactly one A4 page when printing.
+  // This measures the REAL rendered height in the user's own browser (with
+  // their real fonts) and scales down proportionally (never crops, never
+  // stretches) only if it doesn't already fit.
+  (function () {
+    var page = null;
+    var originalWidth = '';
+    var A4_HEIGHT_MM = 297;
+    var MM_TO_PX = 96 / 25.4;
+
+    function fitToA4() {
+      page = document.querySelector('.page');
+      if (!page) return;
+      page.style.transform = 'none';
+      page.style.width = '210mm';
+      // Force layout to recompute at native size before measuring.
+      var naturalHeightPx = page.scrollHeight;
+      var targetHeightPx = A4_HEIGHT_MM * MM_TO_PX;
+      if (naturalHeightPx > targetHeightPx) {
+        var scale = targetHeightPx / naturalHeightPx;
+        originalWidth = (210 / scale) + 'mm';
+        page.style.width = originalWidth;
+        page.style.transform = 'scale(' + scale + ')';
+      }
+    }
+
+    function resetFromA4() {
+      if (!page) return;
+      page.style.transform = 'none';
+      page.style.width = '';
+    }
+
+    window.addEventListener('beforeprint', fitToA4);
+    window.addEventListener('afterprint', resetFromA4);
+
+    if (window.matchMedia) {
+      window.matchMedia('print').addEventListener('change', function (mql) {
+        if (mql.matches) fitToA4();
+        else resetFromA4();
+      });
+    }
+  })();
+</script>
 
 <button class="print-btn" onclick="window.print()" aria-label="Download resume as PDF">⬇ Download PDF</button>
 
@@ -373,12 +416,12 @@
   <aside class="sidebar">
     <div class="photo-wrap">
       <div class="photo-circle">
-     <img src="photo.jpg" alt="Wajahat Hussain">
-   </div>
+  <img src="photo.jpg" alt="Wajahat Hussain Sangi">
+    </div>
     </div>
 
     <p class="summary">
-      Motivated and results driven software developer with hands-on experience in
+      Motivated and results-driven software developer with hands-on experience in
       artificial intelligence, automation, and full-stack software development.
       Founder of CodePulse Innovations, where I design and develop practical,
       technology-driven solutions that address real-world challenges. Proficient
